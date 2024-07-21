@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free URL Shortener</title>
+    <meta name="description" content="Shorten links for free with Recut URL Shortener. Ideal for social media, emails, & SMS. Track clicks, boost engagement. The simple & fast alternative to bitly & tinyurl."/>
+<meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
+<link rel="canonical" href="https://recut.pages.dev" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:site_name" content="Free URL Shortener" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <link href="webstyle.css"  rel="stylesheet">
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark">
+        <button class="navbar-toggler" type="button" onclick="openNav()">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://recut.in" target="_blank">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://app.recut.in/pricing" target="_blank">Pricing</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://recut.in/contact" target="_blank">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="myNav" class="menu-overlay">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="content">
+            <a href="https://recut.in" target="_blank">Home</a>
+            <a href="https://app.recut.in/pricing" target="_blank">Pricing</a>
+            <a href="https://recut.in/contact" target="_blank">Contact</a>
+        </div>
+    </div>
+    
+<div class="maintext">
+    <h1> Free URL Shortener </h1>
+    <p>This is a free tool to shorten URLs, powered by <a href="https://recut.in/" target="_blank">Recut URL Shortener</a>. Create short, brandable links in one click.</p>
+</div>
+
+    <div class="form-container">
+        <form id="shorten-form">
+            <div class="form-group">
+                <input type="text" id="longUrl" name="longUrl" class="form-control" placeholder="Enter URL to shorten" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Shorten URL</button>
+        </form>
+        <div id="result" class="result"></div>
+        <div id="result-actions" class="result-actions">
+            <button id="share-btn" class="btn btn-info">Share</button>
+            <button id="qr-btn" class="btn btn-success">QR Code</button>
+        </div>
+    </div>
+
+    <!-- Spinner Overlay -->
+    <div id="spinner-overlay" class="spinner-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="modal fade" id="share-modal" tabindex="-1" role="dialog" aria-labelledby="shareModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="shareModalLabel">Share this URL</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="share-btns">
+                        <button class="btn btn-primary" onclick="share('facebook')"><i class="fab fa-facebook-f"></i></button>
+                        <button class="btn btn-primary" onclick="share('twitter')"><i class="fab fa-twitter"></i></button>
+                        <button class="btn btn-primary" onclick="share('whatsapp')"><i class="fab fa-whatsapp"></i></button>
+                        <button class="btn btn-primary" onclick="share('linkedin')"><i class="fab fa-linkedin-in"></i></button>
+                        <button class="btn btn-primary" onclick="copyToClipboard(resultUrl)"><i class="fas fa-copy"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Modal -->
+    <div class="modal fade" id="qr-modal" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrModalLabel">QR Code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="qr-code">
+                        <img id="qr-code-img" src="" alt="QR Code">
+                    </div>
+                    <div class="modal-footer">
+                        <a id="download-png" class="downloadprimary" href="" download="qr-code.png"><i class="fa-solid fa-download"></i> PNG</a>
+                        <a id="download-svg" class="downloadprimary" href="" download="qr-code.svg"><i class="fa-solid fa-download"></i> SVG</a>
+                        <a id="download-webp" class="downloadprimary" href="" download="qr-code.webp"><i class="fa-solid fa-download"></i> WEBP</a>
+                        <a id="download-pdf" class="downloadprimary" href="" download="qr-code.pdf"><i class="fa-solid fa-download"></i> PDF</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="privacypolicy">
+    By clicking Shorten URL, you agree to Recut URL Shortener's <a href="https://recut.in/terms-of-service/" target="_blank">Terms of Service</a> , <a href="https://recut.in/privacy-policy" target="_blank">Privacy Policy </a>  and <a href="https://recut.in/links-policy" target="_blank">Links Policy</a>.
+</div>
+
+<!-- Flexbox -->
+ <div class="rcut-container">
+        <div class="rcut-flex-container">
+            <div class="rcut-text-section">
+                <h2>Short Links, Big Results</h2>
+                <p>Boost your brand with Recut URL Shortener! Create trackable short links, QR codes, & custom bio URLs to drive traffic & gain insights. Optimize your marketing today.</p>
+              <button type="button" id="getStartedButton" class="btn btn-primary">Get Started</button>
+            </div>
+            <div class="rcut-image-section">
+                <img src="images/girls.png" alt="Supergirl Image">
+            </div>
+        </div>
+    </div>
+
+<!-- Branding -->
+
+<div class="footertext">
+        <h3>Free URL Shortener & Link Shortener</h3>
+        <p>Instantly turn those long, ugly links into short, shareable URLs with Recut, the best free URL shortener. Perfect for social media (Twitter, Facebook, Instagram), email, SMS or anywhere you need a streamlined link. Track clicks and measure engagement effortlessly. Forget Bitly or TinyURL, Recut is the simple, fast and free link shortener you need. Try it now and see the difference!</p>
+    </div>
+
+<div class="recutbranding">
+     <a href="https://recut.in/" target="_blank"> <p class="recutbrandingtext">Powered by</p></a>
+    <span class="recutbrandingimage">
+       <a href="https://recut.in/" target="_blank"> <img src="images/recut.png" alt="Recut URL Shortener"></a>
+    </span>
+</div>
+
+    <!-- Floating Popup -->
+    <div id="popup" class="popup"></div>
+
+    <!-- JavaScript -->
+    <!-- Bootstrap JavaScript and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    
+    <!-- MENU -->
+ <script>
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+        }
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+        }
+    </script>
+    
+    <!-- getstartedbutton -->
+     <script>
+        // JavaScript to add link to the button with target="_blank"
+        document.getElementById('getStartedButton').onclick = function() {
+            var link = document.createElement('a');
+            link.href = 'https://recut.in/?utm_source=free-url-shortener&utm_campaign=external_pages'; 
+            link.target = '_blank';
+            link.click();
+        };
+    </script>
+    
+    <!-- Parameters -->
+    
+    <script>
+        // Function to add UTM parameters to all <a> links
+function addUTMParameters() {
+    // Select all <a> elements on the page
+    const links = document.querySelectorAll('a');
+
+    // Iterate through each link
+    links.forEach(link => {
+        // Get the current href attribute value
+        let href = link.getAttribute('href');
+
+        // Check if the href is not empty and not already containing UTM parameters
+        if (href && !href.includes('utm_source')) {
+            // Check if the href already contains a query string
+            if (href.includes('?')) {
+                // Append UTM parameters with an '&'
+                href += '&utm_source=free-url-shortener&utm_campaign=external_pages';
+            } else {
+                // Append UTM parameters with a '?'
+                href += '?utm_source=free-url-shortener&utm_campaign=external_pages';
+            }
+            
+            // Update the href attribute with the new value
+            link.setAttribute('href', href);
+        }
+    });
+}
+
+// Run the function to add UTM parameters
+addUTMParameters();
+
+    </script>
+    
+    
+
+    <script>
+        const MAX_URLS_PER_DAY = 5;
+        const LIMIT_KEY = 'shorten_limit';
+        const LAST_RESET_KEY = 'last_reset';
+        let resultUrl = '';
+
+        function getToday() {
+            const today = new Date();
+            return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+        }
+
+        function checkLimit() {
+            const today = getToday();
+            let limitData = JSON.parse(localStorage.getItem(LIMIT_KEY)) || { count: 0, date: today };
+            if (limitData.date !== today) {
+                limitData.count = 0;
+                limitData.date = today;
+            }
+            localStorage.setItem(LIMIT_KEY, JSON.stringify(limitData));
+            return limitData.count;
+        }
+
+        function incrementLimit() {
+            let limitData = JSON.parse(localStorage.getItem(LIMIT_KEY)) || { count: 0, date: getToday() };
+            limitData.count++;
+            localStorage.setItem(LIMIT_KEY, JSON.stringify(limitData));
+        }
+
+        document.getElementById('shorten-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const longUrl = document.getElementById('longUrl').value;
+            const resultDiv = document.getElementById('result');
+            const spinnerOverlay = document.getElementById('spinner-overlay');
+            const input = document.getElementById('longUrl');
+            const button = document.querySelector('.btn');
+            const resultActions = document.getElementById('result-actions');
+            const shareBtn = document.getElementById('share-btn');
+            const qrBtn = document.getElementById('qr-btn');
+
+            // Hide previous result actions and clear previous results
+            resultActions.style.display = 'none';
+            resultDiv.innerHTML = '';
+            shareBtn.style.display = 'none';
+            qrBtn.style.display = 'none';
+
+            // Check URL shortening limit
+            const urlsCount = checkLimit();
+            if (urlsCount >= MAX_URLS_PER_DAY) {
+                showPopup('Limit reached. Sign up for free to get unlimited usage. <a href="https://recut.in/" target="_blank">Sign Up</a>', true);
+                resultDiv.innerHTML = 'Limit reached. Sign up for free to get unlimited usage. <a href="https://recut.in/" target="_blank">Sign Up</a>';
+                return;
+            }
+
+            // Show the spinner overlay and disable form elements
+            spinnerOverlay.style.display = 'flex';
+            input.disabled = true;
+            button.disabled = true;
+
+            try {
+                const response = await fetch('https://app.recut.in/public/publicapi/url/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ longUrl: longUrl })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.error === 0) {
+                        resultUrl = data.shorturl; // Store the short URL
+                        resultDiv.innerHTML = `
+                            <div class="resultbox">
+                                <span class="short-url">${data.shorturl}</span>
+                                <button class="btn btn-secondary copy-btn" onclick="copyToClipboard('${data.shorturl}')"><i class="fa-solid fa-copy"></i> Copy</button>
+                            </div>`;
+                        document.getElementById('longUrl').value = ''; // Clear input box
+                        resultActions.style.display = 'flex'; // Show action buttons
+
+                        // Show share and QR code buttons
+                        shareBtn.style.display = 'block';
+                        qrBtn.style.display = 'block';
+
+                        // Increment URL count
+                        incrementLimit();
+                    } else {
+                        resultDiv.innerHTML = `<strong class="error">Server Error:</strong> ${data.message || 'An unknown error occurred'}`;
+                    }
+                } else {
+                    resultDiv.innerHTML = `<strong class="error">HTTP Error:</strong> ${response.status} ${response.statusText}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<strong class="error">Client Error:</strong> ${error.message}`;
+            } finally {
+                // Hide the spinner overlay and enable form elements
+                spinnerOverlay.style.display = 'none';
+                input.disabled = false;
+                button.disabled = false;
+            }
+        });
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showPopup('Short URL copied to clipboard!', false);
+            }).catch(err => {
+                showPopup('Failed to copy text.', true);
+            });
+        }
+
+        function showPopup(message, isError) {
+            const popup = document.getElementById('popup');
+            popup.innerHTML = message;
+            popup.classList.toggle('error', isError);
+            popup.style.display = 'block';
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 3000);
+        }
+
+        document.getElementById('share-btn').addEventListener('click', function() {
+            $('#share-modal').modal('show');
+        });
+
+        document.getElementById('qr-btn').addEventListener('click', function() {
+            document.getElementById('qr-code-img').src = resultUrl + '/qr';
+            document.getElementById('download-png').href = resultUrl + '/qr/download/png/1000';
+            document.getElementById('download-svg').href = resultUrl + '/qr/download/svg/1000';
+            document.getElementById('download-webp').href = resultUrl + '/qr/download/webp/1000';
+            document.getElementById('download-pdf').href = resultUrl + '/qr/download/pdf/1000';
+            $('#qr-modal').modal('show');
+        });
+
+        function share(platform) {
+            const message = `This URL is shortened by Recut URL Shortener for free 👉.\n${resultUrl}`;
+            let shareUrl = '';
+
+            switch (platform) {
+                case 'facebook':
+                    shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(resultUrl)}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+                    break;
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(resultUrl)}`;
+                    break;
+                default:
+                    break;
+            }
+
+            if (shareUrl) {
+                window.open(shareUrl, '_blank');
+            }
+        }
+    </script>
+
+</body>
+</html>
