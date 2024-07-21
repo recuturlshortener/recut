@@ -430,3 +430,81 @@
         .btn-primary {
             text-align:center;
         }
+
+/* Footer */
+    
+    .recut-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 20px 10%;
+  border-bottom: 2px solid #555;
+  animation: fadeIn 1s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.recut-links {
+  display: flex;
+  gap: 20px;
+}
+
+.recut-links a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.recut-links a:hover {
+  color: #ff9900;
+  transform: scale(1.1);
+}
+
+.recut-copyright {
+  color: #fff;
+  font-size: 14px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .recut-container {
+    padding: 20px 5%;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .recut-links {
+    margin-bottom: 10px;
+  }
+
+  .recut-copyright {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .recut-links {
+    align-items: center;
+    gap: 10px;
+  }
+
+  .recut-links a {
+    font-size: 14px;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.recut-copyright a {
+    color:white;
+    text-decoration:none;
+}
