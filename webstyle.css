@@ -123,7 +123,30 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        
+
+.talksales {
+       margin-left:5px;
+       transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition effects */
+    }
+    .talksales a {
+        color:white;
+        text-decoration:none;
+    }
+    .ortext {
+        margin-left:10px;
+    }
+    /* Media query for small screens */
+    @media (max-width: 576px) { /* Adjust the max-width value as needed */
+        .talksales {
+            display: block; /* Stack the text below the button */
+            margin-left: 0; /* Remove left margin on small screens */
+            margin-top: 10px; /* Add space above the text */
+            text-align:center;
+        }
+    }
+     .talksales:hover {
+        transform: scale(1.05); /* Slightly enlarge the text */
+    }
     
     
     
