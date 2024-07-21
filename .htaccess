@@ -1,26 +1,33 @@
+# Ensure the .htaccess file is read correctly
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+</IfModule>
+
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /error.html [L]
 
-# Enable HTTPS and enforce secure connections
+
+# Strict-Transport-Security (HSTS) - Enforces HTTPS
+# The `max-age` is set to 31536000 seconds (1 year), adjust as needed.
 Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
-# Content Security Policy to control resources the user agent is allowed to load
-Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self';"
+# Content-Security-Policy (CSP) - Prevents XSS and other content injection attacks
+# Adjust the policy based on your specific needs and resources.
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self'; frame-ancestors 'none';"
 
-# Prevent clickjacking by blocking framing of your site
+# X-Frame-Options - Prevents clickjacking by disallowing your site from being framed
 Header always set X-Frame-Options "DENY"
 
-# Control which features can be used in your site
-Header always set Permissions-Policy "geolocation=(self), microphone=(), camera=()"
+# Permissions-Policy - Controls which features and APIs can be used by the site
+# Adjust the policy based on your needs.
+Header always set Permissions-Policy "fullscreen=(self)"
 
-# Enable cross-site scripting protection
-Header always set X-XSS-Protection "1; mode=block"
+# Ensure that .htaccess directives are effective
+<IfModule mod_headers.c>
+    # Apply security headers
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
 
-# Prevent sniffing of MIME types
-Header always set X-Content-Type-Options "nosniff"
-
-# Avoid caching of sensitive information
-Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-Header always set Pragma "no-cache"
