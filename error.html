@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>There’s been a glitch…</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="robots" content="noindex"> <!-- Add noindex meta tag -->
+</head>
+<body>
+  <div class="glitch-message">
+    <h1>There’s been a <span class="glitch-word" data-text="glitch">glitch</span>…</h1>
+    <h3>We’re not quite sure what went wrong.</h3>
+    <div class="countdown-container">
+      <h2 class="countdown-title">Page Reloading in</h2>
+      <h1 class="display-1 countdown-timer"><span id="countdown">5</span> seconds</h1>
+    </div>
+  </div>
+  <!-- Bootstrap JS (Optional - for Bootstrap features like modals, etc.) -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <style>
+    /* Custom styles */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #161616;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+    }
+    h1 {
+        color: white;
+    }
+    .glitch-message {
+      text-align: center;
+      animation: fadeInAnimation 1s ease-in-out forwards;
+      padding: 40px;
+    }
+    .glitch-word {
+      font-size: 3em;
+      color: #ff5722;
+      display: inline-block;
+      position: relative;
+      animation: glitchAnimation 0.15s infinite;
+    }
+    .glitch-word::before {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: #333;
+      clip: rect(0, auto, 0, 0);
+      animation: glitchText 0.3s infinite;
+    }
+    .glitch-message h3 {
+      font-size: 1.5em;
+      color: #ddd;
+      margin-bottom: 30px;
+    }
+    .countdown-container {
+      text-align: center;
+      animation: fadeInAnimation 1s ease-in-out forwards;
+      background-color: #222;
+      border-radius: 10px;
+      padding: 40px;
+      box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
+    }
+    .countdown-title {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #ddd;
+    }
+    .countdown-timer {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #ff5722;
+    }
+    @keyframes fadeInAnimation {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes glitchAnimation {
+      2.5% {
+        transform: rotate(-3deg) skewY(0.5deg);
+      }
+      7.5% {
+        transform: translateY(-2px) rotate(2deg) skewY(-1deg);
+      }
+      12.5% {
+        transform: translateY(2px) rotate(-1deg) skewY(0.5deg);
+      }
+      17.5% {
+        transform: translateY(-1px) rotate(1deg) skewY(-0.5deg);
+      }
+      22.5% {
+        transform: translateY(2px) rotate(1.5deg) skewY(1deg);
+      }
+      27.5% {
+        transform: translateY(0px) rotate(-0.5deg) skewY(-0.5deg);
+      }
+      32.5% {
+        transform: rotate(1deg) skewY(0.5deg);
+      }
+      37.5% {
+        transform: rotate(-0.5deg) skewY(-0.5deg);
+      }
+      42.5% {
+        transform: rotate(0.5deg) skewY(0.5deg);
+      }
+      47.5% {
+        transform: rotate(-0.3deg) skewY(-0.3deg);
+      }
+      52.5% {
+        transform: rotate(0.3deg) skewY(0.3deg);
+      }
+      57.5%, 100% {
+        transform: rotate(0deg) skewY(0deg);
+      }
+    }
+    @keyframes glitchText {
+      2.5% {
+        clip: rect(44px, 9999px, 68px, 0);
+      }
+      7.5% {
+        clip: rect(4px, 9999px, 68px, 0);
+      }
+      12.5% {
+        clip: rect(4px, 9999px, 23px, 0);
+      }
+      17.5% {
+        clip: rect(4px, 9999px, 89px, 0);
+      }
+      22.5% {
+        clip: rect(11px, 9999px, 64px, 0);
+      }
+      27.5% {
+        clip: rect(58px, 9999px, 48px, 0);
+      }
+      32.5% {
+        clip: rect(38px, 9999px, 57px, 0);
+      }
+      37.5% {
+        clip: rect(85px, 9999px, 41px, 0);
+      }
+      42.5% {
+        clip: rect(19px, 9999px, 32px, 0);
+      }
+      47.5% {
+        clip: rect(16px, 9999px, 65px, 0);
+      }
+      52.5% {
+        clip: rect(40px, 9999px, 47px, 0);
+      }
+      57.5% {
+        clip: rect(24px, 9999px, 16px, 0);
+      }
+      100% {
+        clip: rect(0, auto, auto, 0);
+      }
+    }
+  </style>
+  <script>
+    var countdown = 5; // Set the countdown duration in seconds
+    var redirectURL = 'https://free-link-shortener.pages.dev/?utm_source=error_page&utm_medium=redirect';
+
+    function updateCountdown() {
+      var display = document.getElementById('countdown');
+      display.textContent = countdown;
+
+      document.title = 'Redirecting in ' + countdown + ' seconds...'; // Update tab title
+
+      if (countdown <= 0) {
+        window.location.href = redirectURL;
+      } else {
+        countdown--;
+        setTimeout(updateCountdown, 1000); // Update countdown every second (1000 milliseconds)
+      }
+    }
+
+    window.onload = function() {
+      updateCountdown(); // Immediately set the tab's title and start the countdown
+    };
+  </script>
+</body>
+</html>
