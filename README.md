@@ -2,6 +2,14 @@
 
 Welcome to the Recut URL Shortener repository! This project provides a user-friendly interface to shorten URLs using the Recut API. 
 
+# Website
+
+Recut URL Shortener official website [Click Here](https://recut.in).
+
+# Recut URL Shortener API
+
+[CLick Here](https://app.recut.in/developers) to see Recut URL Shortener API and Documentation
+
 ## Features
 
 - Shorten URLs with a single click
@@ -14,7 +22,7 @@ Welcome to the Recut URL Shortener repository! This project provides a user-frie
 
 ## Live Demo
 
-You can see a live demo of the URL shortener at [Recut URL Shortener](https://app.recut.in).
+You can see a live demo of the URL shortener at [Free URL Shortener](https://free-link-shortener.pages.dev).
 
 ## Getting Started
 
