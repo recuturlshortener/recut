@@ -304,37 +304,47 @@
     <!-- Parameters -->
     
     <script>
-        // Function to add UTM parameters to all <a> links
-function addUTMParameters() {
-    // Select all <a> elements on the page
-    const links = document.querySelectorAll('a');
+    // Function to add UTM parameters to all <a> links
+    function addUTMParameters() {
+        // Get the current domain of the host page
+        const currentDomain = window.location.hostname;
 
-    // Iterate through each link
-    links.forEach(link => {
-        // Get the current href attribute value
-        let href = link.getAttribute('href');
+        // Select all <a> elements on the page
+        const links = document.querySelectorAll('a');
 
-        // Check if the href is not empty and not already containing UTM parameters
-        if (href && !href.includes('utm_source')) {
-            // Check if the href already contains a query string
-            if (href.includes('?')) {
-                // Append UTM parameters with an '&'
-                href += '&utm_source=free-url-shortener&utm_campaign=external_pages';
-            } else {
-                // Append UTM parameters with a '?'
-                href += '?utm_source=free-url-shortener&utm_campaign=external_pages';
+        // Iterate through each link
+        links.forEach(link => {
+            // Get the current href attribute value
+            let href = link.getAttribute('href');
+
+            // Create an anchor element to parse the href
+            const anchor = document.createElement('a');
+            anchor.href = href;
+
+            // Get the hostname from the href
+            const linkDomain = anchor.hostname;
+
+            // Check if the href is not empty, not already containing UTM parameters, and not from the same domain
+            if (href && !href.includes('utm_source') && linkDomain !== currentDomain) {
+                // Check if the href already contains a query string
+                if (href.includes('?')) {
+                    // Append UTM parameters with an '&'
+                    href += '&utm_source=free-url-shortener&utm_campaign=external_pages';
+                } else {
+                    // Append UTM parameters with a '?'
+                    href += '?utm_source=free-url-shortener&utm_campaign=external_pages';
+                }
+                
+                // Update the href attribute with the new value
+                link.setAttribute('href', href);
             }
-            
-            // Update the href attribute with the new value
-            link.setAttribute('href', href);
-        }
-    });
-}
+        });
+    }
 
-// Run the function to add UTM parameters
-addUTMParameters();
+    // Run the function to add UTM parameters
+    addUTMParameters();
+</script>
 
-    </script>
     
     
 
