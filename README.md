@@ -8,7 +8,7 @@ Recut URL Shortener official website [Click Here](https://recut.in).
 
 # Recut URL Shortener API
 
-[CLick Here](https://app.recut.in/developers) to see Recut URL Shortener API and Documentation
+[Click Here](https://app.recut.in/developers) to see Recut URL Shortener API and Documentation
 
 ## Features
 
