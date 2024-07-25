@@ -6,7 +6,7 @@
     <title>Free Link Shortener</title>
     <meta name="description" content="Shorten links for free with Recut URL Shortener. Ideal for social media, emails, & SMS. Track clicks, boost engagement. The simple & fast alternative to bitly & tinyurl.">
     <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large">
-    <link rel="canonical" href="https://free-link-shortener.pages.dev/">
+    <link rel="canonical" href="">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="Free Link Shortener">
     <meta property="og:title" content="Free Link Shortener">
@@ -279,7 +279,25 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+
+      <!-- canonical url -->
+      <script>
+            document.addEventListener("DOMContentLoaded", function() {
+    // Create a new link element
+    var canonicalLink = document.createElement('link');
+    canonicalLink.rel = 'canonical';
     
+    // Get the current URL
+    var currentUrl = window.location.href;
+    
+    // Set the href attribute to the current URL
+    canonicalLink.href = currentUrl;
+    
+    // Append the link element to the head of the document
+    document.head.appendChild(canonicalLink);
+});
+      </script>
+      
     <!-- MENU -->
  <script>
         function openNav() {
