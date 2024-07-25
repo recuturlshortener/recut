@@ -281,22 +281,19 @@
 
 
       <!-- canonical url -->
-      <script>
-            document.addEventListener("DOMContentLoaded", function() {
-    // Create a new link element
-    var canonicalLink = document.createElement('link');
-    canonicalLink.rel = 'canonical';
-    
-    // Get the current URL
-    var currentUrl = window.location.href;
-    
-    // Set the href attribute to the current URL
-    canonicalLink.href = currentUrl;
-    
-    // Append the link element to the head of the document
-    document.head.appendChild(canonicalLink);
-});
-      </script>
+   <script>
+        // Wait for the DOM to fully load
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get the current hostname
+            const hostname = window.location.hostname;
+            // Get the canonical link element
+            const canonicalLink = document.querySelector('link[rel="canonical"]');
+            // If the canonical link element exists, set its href attribute to the current host
+            if (canonicalLink) {
+                canonicalLink.href = `${window.location.protocol}//${hostname}${window.location.pathname}`;
+            }
+        });
+    </script>
       
     <!-- MENU -->
  <script>
