@@ -281,16 +281,31 @@
 
 
       <!-- canonical url -->
-   <script>
+  <script>
         // Wait for the DOM to fully load
         document.addEventListener("DOMContentLoaded", function() {
+            console.log("DOM fully loaded and parsed");
+
             // Get the current hostname
             const hostname = window.location.hostname;
+            const protocol = window.location.protocol;
+            const pathname = window.location.pathname;
+
+            console.log("Current protocol:", protocol);
+            console.log("Current hostname:", hostname);
+            console.log("Current pathname:", pathname);
+
             // Get the canonical link element
             const canonicalLink = document.querySelector('link[rel="canonical"]');
+
             // If the canonical link element exists, set its href attribute to the current host
             if (canonicalLink) {
-                canonicalLink.href = `${window.location.protocol}//${hostname}${window.location.pathname}`;
+                const fullUrl = `${protocol}//${hostname}${pathname}`;
+                canonicalLink.href = fullUrl;
+
+                console.log("Canonical link href set to:", fullUrl);
+            } else {
+                console.log("Canonical link element not found");
             }
         });
     </script>
