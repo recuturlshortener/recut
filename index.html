@@ -283,32 +283,23 @@
       <!-- canonical url -->
   
     <script>
-        // Wait for the DOM to fully load
-        document.addEventListener("DOMContentLoaded", function() {
-            console.log("DOM fully loaded and parsed");
+        // Get the current page's protocol (http or https) and hostname
+const currentProtocol = window.location.protocol;
+const currentHostname = window.location.hostname;
 
-            // Get the current hostname
-            const hostname = window.location.hostname;
-            const protocol = window.location.protocol;
-            const pathname = window.location.pathname;
+// Combine them to form the complete origin (e.g., https://www.example.com)
+const currentOrigin = currentProtocol + "//" + currentHostname;
 
-            console.log("Current protocol:", protocol);
-            console.log("Current hostname:", hostname);
-            console.log("Current pathname:", pathname);
+// Find the canonical link element
+const canonicalLink = document.querySelector('link[rel="canonical"]');
 
-            // Get the canonical link element
-            const canonicalLink = document.querySelector('link[rel="canonical"]');
+// Set the href attribute with the current origin
+if (canonicalLink) {
+  canonicalLink.href = currentOrigin + window.location.pathname;
+} else {
+  console.warn("Canonical link element not found.");
+}
 
-            // If the canonical link element exists, set its href attribute to the current host
-            if (canonicalLink) {
-                const fullUrl = `${protocol}//${hostname}${pathname}`;
-                canonicalLink.setAttribute('href', fullUrl);
-
-                console.log("Canonical link href set to:", fullUrl);
-            } else {
-                console.log("Canonical link element not found");
-            }
-        });
     </script>
       
     <!-- MENU -->
