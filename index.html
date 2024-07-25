@@ -281,7 +281,8 @@
 
 
       <!-- canonical url -->
-  <script>
+  
+    <script>
         // Wait for the DOM to fully load
         document.addEventListener("DOMContentLoaded", function() {
             console.log("DOM fully loaded and parsed");
@@ -301,7 +302,7 @@
             // If the canonical link element exists, set its href attribute to the current host
             if (canonicalLink) {
                 const fullUrl = `${protocol}//${hostname}${pathname}`;
-                canonicalLink.href = fullUrl;
+                canonicalLink.setAttribute('href', fullUrl);
 
                 console.log("Canonical link href set to:", fullUrl);
             } else {
